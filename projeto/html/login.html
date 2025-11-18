@@ -1,12 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TECShop</title>
+    <title>Acesso à Plataforma</title>
     <link rel="stylesheet" href="../css/login.css">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    
+
+    <div id="login-container" class="w-full max-w-md login-card p-8 sm:p-10 rounded-2xl shadow-2xl border border-gray-700/50">
+        <!-- Título e Ícone -->
+        <div class="text-center mb-8">
+            <!-- Ícone simulado com SVG (pode usar 'lucide-react' ou 'font-awesome' se fosse React, mas aqui é puro SVG) -->
+            <svg class="mx-auto h-12 w-12 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+            </svg>
+            <h1 class="mt-4 text-3xl font-extrabold text-white">
+                Acesso de Utilizador
+            </h1>
+            <p class="mt-2 text-sm text-gray-400">
+                Introduza as suas credenciais para continuar.
+            </p>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-300 mb-1">
+                    Nome de Utilizador ou Email
+                </label>
+                <input id="username" name="username" type="text" required
+                       class="w-full px-4 py-2.5 bg-gray-700/70 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                       placeholder="o-seu-email@exemplo.pt">
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-1">
+                    <label for="password" class="block text-sm font-medium text-gray-300">
+                        Palavra-Passe
+                    </label>
+                    <a href="#" class="text-xs font-semibold text-blue-400 hover:text-blue-300 transition duration-150">
+                        Esqueceu a Palavra-Passe?
+                    </a>
+                </div>
+                <input id="password" name="password" type="password" required
+                       class="w-full px-4 py-2.5 bg-gray-700/70 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out"
+                       placeholder="••••••••">
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-800 transition duration-200 transform hover:scale-[1.01]">
+                    Iniciar Sessão
+                </button>
+            </div>
+        </form>
+
+        <div id="message-box" class="mt-6 hidden p-3 rounded-lg text-sm text-center">
+            <!-- As mensagens de sucesso/erro serão inseridas aqui pelo JS -->
+        </div>
+
+        <div class="mt-8 text-center text-sm text-gray-400">
+            Ainda não tem conta?
+            <a href="#" class="font-medium text-blue-400 hover:text-blue-300 transition duration-150">
+                Registe-se
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('login-form');
+            const messageBox = document.getElementById('message-box');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+
+            const showMessage = (text, isError = false) => {
+                messageBox.textContent = text;
+                messageBox.classList.remove('hidden', 'bg-red-900/50', 'text-red-300', 'bg-green-900/50', 'text-green-300');
+                if (isError) {
+                    messageBox.classList.add('bg-red-900/50', 'text-red-300');
+                } else {
+                    messageBox.classList.add('bg-green-900/50', 'text-green-300');
+                }
+            };
+
+            const hideMessage = () => {
+                messageBox.classList.add('hidden');
+                messageBox.textContent = '';
+            };
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault(); // Previne o envio padrão do formulário
+
+                hideMessage();
+
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                if (!username || !password) {
+                    showMessage("Por favor, preencha todos os campos.", true);
+                    return;
+                }
+
+                const validUsername = "teste@exemplo.pt";
+                const validPassword = "dadai123";
+
+                if (username === validUsername && password === validPassword) {
+                    showMessage("Sessão iniciada com sucesso! Redirecionando...", false);
+                    form.reset();
+                } else {
+                    showMessage("Credenciais inválidas. Tente novamente.", true);
+                    passwordInput.value = ''; 
+                }
+            });
+        });
+    </script>
 </body>
 </html>

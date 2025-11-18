@@ -1,5 +1,14 @@
-*{
-    background-color: #153B62;
-    margin: 0;
-    padding: 0;
-}
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #153B62 0%, #0d121c 100%); /* Fundo em gradiente azul escuro */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    }
+.login-card {
+    padding: 80px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(25, 62, 113, 0.8); /* Fundo do card ligeiramente transparente */
+    }
