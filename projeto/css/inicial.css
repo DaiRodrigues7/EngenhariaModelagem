@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Oswald', sans-serif;
+    font-size: 70px;
 }
 
 .botao {
@@ -15,11 +16,6 @@
   cursor: pointer; /* Muda o cursor para "mãozinha" */
   color: white;
   text-align: center;
-  margin-top: 338px;
-  background-color: black;
-}
-
-/* Efeito opcional ao passar o mouse */
-.botao:hover {
-  background-color: #0056b3;
+  margin-top: 315px;
+  margin-left: 560px;
 }
