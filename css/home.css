@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
+}
+
+/* topo */
+.top-bar {
+    background: #083c64;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-bar .left, .top-bar .right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.icon {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.text-link {
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* BANNER */
+.banner {
+    position: relative;
+}
+
+.banner-img {
+    width: 100%;
+    height: auto;
+}
+
+.banner-text {
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    color: white;
+}
+
+.banner-text h1 {
+    font-size: 40px;
+    margin: 0;
+}
+
+.banner-text h2 {
+    font-size: 30px;
+    margin: 5px 0;
+}
+
+/* produtos */
+.products {
+    display: flex;
+    gap: 80px;
+    padding: 40px;
+    background: #083c64;
+    overflow-x: auto;
+}
+
+.product-card {
+    background: white;
+    border-radius: 15px;
+    padding: 10px;
+    min-width: 150px;
+    height: 190px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-card img {
+    width: 120%;
+    height:100%;
+    object-fit: contain;
+}

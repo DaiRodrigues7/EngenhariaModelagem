@@ -1,0 +1,21 @@
+*{
+    background: url("/img/tecnologia.png");
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Oswald', sans-serif;
+    font-size: 70px;
+}
+
+.botao {
+  /* Estilos para parecer um botão */
+  display: inline-block;
+  text-decoration: none; /* Remove o sublinhado padrão do link */
+  border-radius: 5px; /* Cantos arredondados */
+  border: none; /* Remove a borda padrão */
+  cursor: pointer; /* Muda o cursor para "mãozinha" */
+  color: white;
+  text-align: left;
+  margin-top: 315px;
+  margin-left: 560px;
+}

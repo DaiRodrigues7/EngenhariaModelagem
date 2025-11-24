@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja</title>
+    <link rel="stylesheet" href="../css/home.css">
+</head>
+<body>
+
+<header class="top-bar">
+    <div class="left">
+        <div class="menu-icon">☰</div>
+        <div class="location">📍 Enviar para...</div>
+    </div>
+
+    <div class="right">
+        <span class="icon">🔔</span>
+        <span class="icon">👤</span>
+        <span class="icon">🛒</span>
+        <span class="text-link">Devoluções e Pedidos</span>
+    </div>
+</header>
+
+
+<!-- Banner -->
+<section class="banner">
+    <img src="/img/banner.png" class="banner-img">
+    <div class="banner-text">
+        <h1>Eletrônicos de ponta</h1>
+        <h2>Preços imbatíveis</h2>
+    </div>
+</section>
+
+
+<!-- Produtos -->
+<section class="products">
+    <div class="product-card"><img src="/img/image (1).png"></div>
+    <div class="product-card"><img src="/img/image (2).png"></div>
+    <div class="product-card"><img src="/img/image (3).png"></div>
+    <div class="product-card"><img src="/img/image (4).png"></div>
+    <div class="product-card"><img src="/img/image (5).png"></div>
+</section>
+
+
+<script>
+    const btn = document.getElementById("btnCategorias");
+    const menu = document.getElementById("menuCategorias");
+
+    btn.addEventListener("click", () => {
+        menu.classList.toggle("open");
+    });
+
+    // Fecha ao clicar fora
+    document.addEventListener("click", (e) => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.classList.remove("open");
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (username === validUsername && password === validPassword) {
                     showMessage("Sessão iniciada com sucesso! Redirecionando...", false);
                     form.reset();
+
+                setTimeout(() => {
+                    window.location.href = "home.html";
+                }, 1500);
+
                 } else {
                     showMessage("Credenciais inválidas. Tente novamente.", true);
                     passwordInput.value = ''; 
