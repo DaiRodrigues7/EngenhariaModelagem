@@ -1,5 +1,6 @@
 *{
-    background: url("/img/tecnologia.png");
+    background: url("/img/tecnologia.png") no-repeat;
+    background-color: #153B62;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -9,13 +10,11 @@
 
 .botao {
   /* Estilos para parecer um botão */
-  display: inline-block;
+  display: inline-block; /* Remova o sublinhado padrão do link */
   text-decoration: none; /* Remove o sublinhado padrão do link */
   border-radius: 5px; /* Cantos arredondados */
   border: none; /* Remove a borda padrão */
   cursor: pointer; /* Muda o cursor para "mãozinha" */
   color: white;
   text-align: left;
-  margin-top: 315px;
-  margin-left: 560px;
 }

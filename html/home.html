@@ -10,7 +10,7 @@
 
 <header class="top-bar">
     <div class="left">
-        <div class="menu-icon">☰</div>
+        <div class="menu-icon" id="menuToggle">☰</div>
         <div class="location">📍 Enviar para...</div>
     </div>
 
@@ -22,6 +22,14 @@
     </div>
 </header>
 
+<!-- menu lateral -->
+<div class="side-menu" id="sideMenu">
+    <a href="/html/tecnologia.html">Tecnologia</a>
+    <a href="#">Favoritos</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Dicas</a>
+    <a href="#">Histórico</a>
+</div>
 
 <!-- Banner -->
 <section class="banner">
@@ -42,22 +50,6 @@
     <div class="product-card"><img src="/img/image (5).png"></div>
 </section>
 
-
-<script>
-    const btn = document.getElementById("btnCategorias");
-    const menu = document.getElementById("menuCategorias");
-
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("open");
-    });
-
-    // Fecha ao clicar fora
-    document.addEventListener("click", (e) => {
-        if (!btn.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.remove("open");
-        }
-    });
-</script>
-
+<script src="../js/home.js"></script>
 </body>
 </html>
