@@ -1,5 +1,4 @@
 *{
-    background: url("../img/inicial.png");
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -7,15 +6,26 @@
     font-size: 70px;
 }
 
+body {
+    background: url("../img/inicial.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+}
+
 .botao {
   /* Estilos para parecer um botão */
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-decoration: none; /* Remove o sublinhado padrão do link */
   border-radius: 5px; /* Cantos arredondados */
   border: none; /* Remove a borda padrão */
   cursor: pointer; /* Muda o cursor para "mãozinha" */
   color: white;
   text-align: center;
-  margin-top: 315px;
-  margin-left: 560px;
+  height: 100vh;
+  width: 100%;
 }
