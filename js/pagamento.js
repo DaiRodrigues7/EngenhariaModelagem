@@ -75,18 +75,53 @@ function removeItem(index) {
 function updateTotals(cart) {
     let subtotal = 0;
     
+    // Se o carrinho estiver vazio, resetar valores
+    if (!cart || cart.length === 0) {
+        document.getElementById('subtotalPrice').textContent = 'R$ 0,00';
+        document.getElementById('fretePrice').textContent = 'R$ 15,00';
+        document.getElementById('totalPrice').textContent = 'R$ 15,00';
+        return;
+    }
+    
+    // Calcular subtotal
     cart.forEach(item => {
-        const priceString = item.price.replace('R$ ', '').replace(',', '.');
-        const price = parseFloat(priceString);
-        subtotal += price * parseInt(item.quantity);
+        try {
+            // Remover 'R$ ' e converter vírgula para ponto
+            let priceString = item.price;
+            
+            // Se o preço vier como número, converter para string
+            if (typeof priceString === 'number') {
+                priceString = 'R$ ' + priceString.toFixed(2).replace('.', ',');
+            }
+            
+            priceString = priceString.replace('R$ ', '').replace(',', '.');
+            const price = parseFloat(priceString);
+            const quantity = parseInt(item.quantity) || 1;
+            
+            if (!isNaN(price)) {
+                subtotal += price * quantity;
+            }
+        } catch (error) {
+            console.error('Erro ao calcular preço do item:', item, error);
+        }
     });
     
+    // Calcular frete (grátis se subtotal > R$ 100)
     const frete = subtotal > 100 ? 0 : FRETE_PRICE;
     const total = subtotal + frete;
     
+    // Atualizar DOM
     document.getElementById('subtotalPrice').textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
     document.getElementById('fretePrice').textContent = frete === 0 ? 'Grátis' : 'R$ ' + frete.toFixed(2).replace('.', ',');
     document.getElementById('totalPrice').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+    
+    // Debug
+    console.log('Carrinho atualizado:', {
+        itemsCount: cart.length,
+        subtotal: subtotal.toFixed(2),
+        frete: frete.toFixed(2),
+        total: total.toFixed(2)
+    });
 }
 
 // Menu toggle

@@ -883,8 +883,7 @@
                 product: 'Fone de ouvido over-ear sem fio i2GO Pro Comfort Go',
                 color: color,
                 quantity: parseInt(quantity),
-                price: 139.90,
-                displayPrice: 'R$ 139,90'
+                price: 'R$ 139,90'
             };
 
             // Store in localStorage
@@ -944,13 +943,34 @@
 
     // Buy now
     function buyNow() {
-        const quantity = document.getElementById('quantity').value;
-        showNotification(`Iniciando compra de ${quantity} item(ns)...`);
-        
-        // Redirecionar para página de pagamento após 1.5 segundos
-        setTimeout(() => {
-            window.location.href = '/html/pagamento.html';
-        }, 1500);
+        try {
+            const quantity = document.getElementById('quantity').value;
+            const activeColorBtn = document.querySelector('.option-buttons .option-btn.active');
+            const color = activeColorBtn ? activeColorBtn.textContent : 'Preto';
+            
+            const cartItem = {
+                id: Date.now(),
+                product: 'Fone de ouvido over-ear sem fio i2GO Pro Comfort Go',
+                color: color,
+                quantity: parseInt(quantity),
+                price: 'R$ 139,90'
+            };
+
+            // Store in localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            showNotification(`${quantity} item(ns) adicionado(s)! Redirecionando para pagamento...`);
+            
+            // Redirecionar para página de pagamento após 1.5 segundos
+            setTimeout(() => {
+                window.location.href = '/html/pagamento.html';
+            }, 1500);
+        } catch (error) {
+            console.error('Erro ao comprar:', error);
+            showToast('Erro ao processar compra', 'error');
+        }
     }
 
     // Toast notification - Improved version
