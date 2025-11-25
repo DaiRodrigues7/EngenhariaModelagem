@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header */
+        .top-bar {
+            background: #083c64;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar .left, .top-bar .right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-icon {
+            font-size: 22px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .menu-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+        }
+
+        .icon {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .text-link {
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .location {
+            font-size: 14px;
+        }
+
+        /* Side Menu */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: #083c64;
+            padding-top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: 0.3s;
+            z-index: 2000;
+        }
+
+        .side-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            transition: background 0.2s;
+        }
+
+        .side-menu a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .side-menu.open {
+            left: 0;
+        }
+
+        /* Product Container */
+        .product-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+
+        /* Image Gallery */
+        .product-images {
+            display: flex;
+            gap: 15px;
+        }
+
+        .image-thumbnails {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+        }
+
+        .thumbnail:hover {
+            border-color: #083c64;
+            transform: scale(1.05);
+        }
+
+        .thumbnail.active {
+            border-color: #083c64;
+            background: #f0f0f0;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-image {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: 500px;
+        }
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 20px;
+        }
+
+        /* Product Info */
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .product-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #083c64;
+            margin-bottom: 10px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stars {
+            font-size: 18px;
+            color: #ffc107;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .availability {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .availability.in-stock {
+            color: #28a745;
+        }
+
+        .availability.out-of-stock {
+            color: #dc3545;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .availability.in-stock .status-indicator {
+            background: #28a745;
+        }
+
+        .availability.out-of-stock .status-indicator {
+            background: #dc3545;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .price-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .current-price {
+            font-size: 36px;
+            font-weight: bold;
+            color: #083c64;
+        }
+
+        .original-price {
+            font-size: 18px;
+            color: #999;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .price-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Product Description */
+        .product-description {
+            line-height: 1.6;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .description-title {
+            font-weight: bold;
+            color: #083c64;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        /* Product Features */
+        .product-features {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #083c64;
+        }
+
+        .features-title {
+            font-weight: bold;
+            color: #083c64;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .feature-item::before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Options Section */
+        .options-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .option-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+
+        .option-btn:hover {
+            border-color: #083c64;
+            background: #f0f0f0;
+        }
+
+        .option-btn.active {
+            background: #083c64;
+            color: white;
+            border-color: #083c64;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            width: fit-content;
+        }
+
+        .quantity-btn {
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .quantity-input {
+            width: 50px;
+            border: none;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .quantity-input:focus {
+            outline: none;
+        }
+
+        /* Buttons Section */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .btn-buy {
+            background: #083c64;
+            color: white;
+        }
+
+        .btn-buy:hover {
+            background: #052a47;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(8, 60, 100, 0.3);
+        }
+
+        .btn-cart {
+            background: white;
+            color: #083c64;
+            border: 2px solid #083c64;
+        }
+
+        .btn-cart:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .btn-wishlist {
+            background: #f5f5f5;
+            color: #dc3545;
+            border: 2px solid #ddd;
+        }
+
+        .btn-wishlist:hover {
+            background: #fff;
+            border-color: #dc3545;
+            transform: translateY(-2px);
+        }
+
+        .btn-wishlist.added {
+            background: #ffe0e0;
+            border-color: #dc3545;
+        }
+
+        /* Additional Info */
+        .additional-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .info-box {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .info-box strong {
+            color: #083c64;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 20px;
+            }
+
+            .main-image {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                margin: 20px auto;
+                padding: 20px;
+            }
+
+            .product-title {
+                font-size: 22px;
+            }
+
+            .current-price {
+                font-size: 28px;
+            }
+
+            .image-thumbnails {
+                flex-direction: row;
+            }
+
+            .product-images {
+                flex-direction: column;
+            }
+
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+
+            .additional-info {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar .right {
+                gap: 10px;
+            }
+
+            .text-link {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-container {
+                padding: 15px;
+            }
+
+            .product-title {
+                font-size: 18px;
+            }
+
+            .current-price {
+                font-size: 24px;
+            }
+
+            .main-image {
+                min-height: 300px;
+            }
+
+            .thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+
+            .option-buttons {
+                gap: 8px;
+            }
+
+            .option-btn {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .btn {
+                padding: 12px;
+                font-size: 14px;
+            }
+
+            .product-features {
+                padding: 15px;
+            }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 5000;
+            animation: slideIn 0.3s ease-in-out;
+        }
+
+        .toast.error {
+            background: #dc3545;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes notificationSlideIn {
+            from {
+                transform: translateX(450px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes notificationSlideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(450px);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="top-bar">
+    <div class="left">
+        <button class="back-button" onclick="window.history.back()">←</button>
+        <div class="menu-icon" id="menuToggle">☰</div>
+        <div class="location">📍 Enviar para...</div>
+    </div>
+
+    <div class="right">
+        <span class="icon">🔔</span>
+        <span class="icon">👤</span>
+        <a href="/html/carrinho.html" class="icon" style="text-decoration: none; cursor: pointer;">🛒</a>
+        <span class="text-link">Devoluções e Pedidos</span>
+    </div>
+</header>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+    <a href="/html/home.html">Início</a>
+    <a href="/html/tecnologia.html">Tecnologia</a>
+    <a href="#">Favoritos</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Histórico</a>
+</div>
+
+<!-- Product Container -->
+<div class="product-container">
+    <!-- Images Gallery -->
+    <div class="product-images">
+        <div class="image-thumbnails">
+            <div class="thumbnail active" onclick="changeImage(0)">
+                <img src="/img/image (2).png" alt="Imagem 1">
+            </div>
+        </div>
+
+        <div class="main-image">
+            <img id="mainImage" src="/img/image (2).png" alt="Produto principal">
+        </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info">
+        <!-- Header -->
+        <div class="product-header">
+            <h1 class="product-title">Fone de ouvido over-ear sem fio i2GO Pro Comfort Go</h1>
+            
+            <div class="product-rating">
+                <div class="stars">★★★★★</div>
+                <span class="rating-count">(856 avaliações)</span>
+            </div>
+
+            <div class="availability in-stock">
+                <span class="status-indicator"></span>
+                Disponível em estoque
+            </div>
+        </div>
+
+        <!-- Pricing -->
+        <div class="pricing-section">
+            <div class="price-display">
+                <span class="current-price" id="currentPrice">R$ 139,90</span>
+                <span class="original-price" id="originalPrice">R$ 269,90</span>
+                <span class="discount-badge" id="discountBadge">-48%</span>
+            </div>
+            <div class="price-info">
+                Ou 12x de <strong>R$ 13,81</strong> sem juros
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="product-description">
+            <p class="description-title">Descrição do Produto</p>
+            <p>
+                Fone De Ouvido Headphone Dapon H02d Bluetooth 5.1 Com Microfone Cor Preto. Oferece conforto excepcional para uso prolongado com qualidade de som premium e tecnologia de cancelamento de ruído ativo.
+            </p>
+        </div>
+
+        <!-- Features -->
+        <div class="product-features">
+            <div class="features-title">Principais Características</div>
+            <div class="features-list">
+                <div class="feature-item">É sem fio: Sim</div>
+                <div class="feature-item">É resistente à água: Não</div>
+                <div class="feature-item">Com luz LED: Sim</div>
+                <div class="feature-item">Com cancelamento de ruído: Sim</div>
+                <div class="feature-item">Com microfone: Sim</div>
+                <div class="feature-item">Duração da bateria: 30 horas</div>
+            </div>
+        </div>
+
+        <!-- Options -->
+        <div class="options-section">
+            <!-- Color Selection -->
+            <div class="option-group">
+                <label class="option-label">Cor</label>
+                <div class="option-buttons">
+                    <button class="option-btn active" onclick="selectOption(this, 'color')">Preto</button>
+                    <button class="option-btn" onclick="selectOption(this, 'color')">Branco</button>
+                    <button class="option-btn" onclick="selectOption(this, 'color')">Azul</button>
+                    <button class="option-btn" onclick="selectOption(this, 'color')">Cinza</button>
+                </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="option-group">
+                <label class="option-label">Quantidade</label>
+                <div class="quantity-selector">
+                    <button class="quantity-btn" onclick="decreaseQuantity()">−</button>
+                    <input type="text" class="quantity-input" id="quantity" value="1" readonly>
+                    <button class="quantity-btn" onclick="increaseQuantity()">+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-buy" onclick="buyNow()">Comprar Agora</button>
+            <button class="btn btn-cart" onclick="addToCart()">Adicionar ao Carrinho</button>
+            <button class="btn btn-wishlist" id="wishlistBtn" onclick="addToWishlist()">♥ Favorito</button>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="additional-info">
+            <div class="info-box">
+                <strong>📦 Frete Grátis</strong>
+                Para compras acima de R$ 100
+            </div>
+            <div class="info-box">
+                <strong>🔄 Troca Garantida</strong>
+                Em 30 dias sem dúvidas
+            </div>
+            <div class="info-box">
+                <strong>⚡ Entrega Rápida</strong>
+                São Paulo: 24h | Capitais: 2-3 dias
+            </div>
+            <div class="info-box">
+                <strong>🛡️ Proteção Total</strong>
+                Garantia de 12 meses
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Menu toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('sideMenu').classList.toggle('open');
+    });
+
+    // Image gallery
+    const images = [
+        '/img/image (2).png'
+    ];
+
+    function changeImage(index) {
+        document.getElementById('mainImage').src = images[index];
+        
+        // Update thumbnail active state
+        document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+            if (i === index) {
+                thumb.classList.add('active');
+            } else {
+                thumb.classList.remove('active');
+            }
+        });
+    }
+
+    // Quantity functions
+    function increaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        quantityInput.value = parseInt(quantityInput.value) + 1;
+    }
+
+    function decreaseQuantity() {
+        const quantityInput = document.getElementById('quantity');
+        if (parseInt(quantityInput.value) > 1) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
+        }
+    }
+
+    // Option selection
+    function selectOption(button, type) {
+        const siblings = button.parentElement.querySelectorAll('.option-btn');
+        siblings.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+    }
+
+    // Wishlist
+    let wishlistAdded = false;
+    function addToWishlist() {
+        const wishlistBtn = document.getElementById('wishlistBtn');
+        wishlistAdded = !wishlistAdded;
+        
+        if (wishlistAdded) {
+            wishlistBtn.classList.add('added');
+            showNotification('Adicionado aos favoritos!');
+        } else {
+            wishlistBtn.classList.remove('added');
+            showNotification('Removido dos favoritos');
+        }
+    }
+
+    // Add to cart
+    function addToCart() {
+        try {
+            const quantity = document.getElementById('quantity').value;
+            const activeColorBtn = document.querySelector('.option-buttons .option-btn.active');
+            const color = activeColorBtn ? activeColorBtn.textContent : 'Preto';
+            
+            const cartItem = {
+                id: Date.now(),
+                product: 'Fone de ouvido over-ear sem fio i2GO Pro Comfort Go',
+                color: color,
+                quantity: parseInt(quantity),
+                price: 139.90,
+                displayPrice: 'R$ 139,90'
+            };
+
+            // Store in localStorage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.push(cartItem);
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Show notification
+            showNotification(`${quantity} item(ns) adicionado(s) ao carrinho!`);
+            
+            // Update cart badge
+            updateCartBadge();
+        } catch (error) {
+            console.error('Erro ao adicionar ao carrinho:', error);
+            showNotification('Erro ao adicionar ao carrinho', 'error');
+        }
+    }
+
+    // Update cart badge indicator
+    function updateCartBadge() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartIcon = document.querySelector('a[href="/html/carrinho.html"]');
+        
+        if (cartIcon) {
+            const existingBadge = cartIcon.querySelector('.cart-badge');
+            if (existingBadge) {
+                existingBadge.remove();
+            }
+
+            if (cart.length > 0) {
+                const badge = document.createElement('span');
+                badge.className = 'cart-badge';
+                badge.textContent = cart.length;
+                badge.style.cssText = `
+                    position: absolute;
+                    top: -5px;
+                    right: -10px;
+                    background: #dc3545;
+                    color: white;
+                    border-radius: 50%;
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                    font-weight: bold;
+                `;
+                cartIcon.style.position = 'relative';
+                cartIcon.appendChild(badge);
+            }
+        }
+    }
+
+    // Initialize badge on page load
+    window.addEventListener('load', updateCartBadge);
+
+    // Buy now
+    function buyNow() {
+        const quantity = document.getElementById('quantity').value;
+        showNotification(`Iniciando compra de ${quantity} item(ns)...`);
+        
+        // Redirecionar para página de pagamento após 1.5 segundos
+        setTimeout(() => {
+            window.location.href = '/html/pagamento.html';
+        }, 1500);
+    }
+
+    // Toast notification - Improved version
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        toast.textContent = message;
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: ${type === 'error' ? '#dc3545' : '#28a745'};
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 5000;
+            animation: slideIn 0.3s ease-in-out;
+            font-size: 14px;
+            font-weight: bold;
+        `;
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.animation = 'slideOut 0.3s ease-in-out';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Alternative notification function
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.textContent = message;
+        notification.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 16px 28px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            font-size: 14px;
+            font-weight: bold;
+            animation: notificationSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'notificationSlideOut 0.4s ease-in-out';
+            setTimeout(() => notification.remove(), 400);
+        }, 3500);
+    }
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        const menu = document.getElementById('sideMenu');
+        const menuToggle = document.getElementById('menuToggle');
+        
+        if (!menu.contains(event.target) && !menuToggle.contains(event.target)) {
+            menu.classList.remove('open');
+        }
+    });
+</script>
+
+</body>
+</html>

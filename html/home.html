@@ -17,7 +17,7 @@
     <div class="right">
         <span class="icon">🔔</span>
         <span class="icon">👤</span>
-        <span class="icon">🛒</span>
+        <a href="/html/carrinho.html" class="icon" style="text-decoration: none; cursor: pointer;">🛒</a>
         <span class="text-link">Devoluções e Pedidos</span>
     </div>
 </header>
@@ -43,13 +43,33 @@
 
 <!-- Produtos -->
 <section class="products">
-    <div class="product-card"><img src="/img/image (1).png"></div>
-    <div class="product-card"><img src="/img/image (2).png"></div>
-    <div class="product-card"><img src="/img/image (3).png"></div>
-    <div class="product-card"><img src="/img/image (4).png"></div>
-    <div class="product-card"><img src="/img/image (5).png"></div>
+    <a href="/html/produto.html" class="product-card">
+        <img src="/img/image (1).png" alt="Produto 1">
+    </a>
+    <a href="/html/produto.html" class="product-card">
+        <img src="/img/image (2).png" alt="Produto 2">
+    </a>
+    <a href="/html/produto.html" class="product-card">
+        <img src="/img/image (3).png" alt="Produto 3">
+    </a>
+    <a href="/html/produto.html" class="product-card">
+        <img src="/img/image (4).png" alt="Produto 4">
+    </a>
+    <a href="/html/produto.html" class="product-card">
+        <img src="/img/image (5).png" alt="Produto 5">
+    </a>
 </section>
 
 <script src="../js/home.js"></script>
+<script>
+    // Adicionar clique ao ícone do carrinho para garantir navegação
+    const cartIcon = document.querySelector('a[href="/html/carrinho.html"]');
+    if (cartIcon) {
+        cartIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '/html/carrinho.html';
+        });
+    }
+</script>
 </body>
 </html>

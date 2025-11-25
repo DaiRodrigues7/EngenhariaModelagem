@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento</title>
+    <link rel="stylesheet" href="../css/pagamento.css">
+</head>
+<body>
+
+<!-- Header -->
+<header class="top-bar">
+    <div class="left">
+        <div class="menu-icon" id="menuToggle">☰</div>
+        <div class="location">📍 Enviar para...</div>
+    </div>
+
+    <div class="right">
+        <span class="icon">🔔</span>
+        <span class="icon">👤</span>
+        <a href="/html/carrinho.html" class="icon" style="text-decoration: none; cursor: pointer;">🛒</a>
+        <span class="text-link">Devoluções e Pedidos</span>
+    </div>
+</header>
+
+<!-- Side Menu -->
+<div class="side-menu" id="sideMenu">
+    <a href="/html/home.html">Início</a>
+    <a href="/html/tecnologia.html">Tecnologia</a>
+    <a href="#">Favoritos</a>
+    <a href="#">Ofertas</a>
+    <a href="#">Histórico</a>
+</div>
+
+<!-- Main Content -->
+<div class="payment-container">
+    <div class="payment-wrapper">
+        
+        <!-- Product Summary Section -->
+        <section class="product-summary">
+            <h2>Resumo do Pedido</h2>
+            <div class="summary-items" id="cartItems">
+                <!-- Items carregados dinamicamente do localStorage -->
+            </div>
+            <div class="summary-total">
+                <span class="total-label">Subtotal:</span>
+                <span class="total-price" id="subtotalPrice">R$ 0,00</span>
+            </div>
+            <div class="summary-item" style="border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;">
+                <span class="item-name">Frete</span>
+                <span class="item-price" id="fretePrice">R$ 15,00</span>
+            </div>
+            <div class="summary-total" style="margin-top: 15px;">
+                <span class="total-label">Total:</span>
+                <span class="total-price" id="totalPrice">R$ 15,00</span>
+            </div>
+            <div id="emptyCart" class="empty-cart-message">
+                <p>🛒 Seu carrinho está vazio</p>
+                <a href="/html/home.html" class="continue-shopping">Continuar comprando</a>
+            </div>
+        </section>
+
+        <!-- Delivery Address Section -->
+        <section class="delivery-section">
+            <h2>Endereço de Entrega</h2>
+            <form class="address-form">
+                <div class="form-group">
+                    <label for="fullName">Nome Completo</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Seu nome completo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Endereço</label>
+                    <input type="text" id="address" name="address" placeholder="Rua, número" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">Cidade</label>
+                        <input type="text" id="city" name="city" placeholder="Cidade" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">Estado</label>
+                        <input type="text" id="state" name="state" placeholder="Estado" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" name="cep" placeholder="00000-000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="(00) 00000-0000" required>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <!-- Payment Form Section -->
+        <section class="payment-section">
+            <h2>Informações de Pagamento</h2>
+            <form id="paymentForm" class="payment-form">
+                <div class="form-group">
+                    <label for="cardName">Nome do Titular</label>
+                    <input type="text" id="cardName" name="cardName" placeholder="Nome conforme consta no cartão" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cardNumber">Número do Cartão</label>
+                    <input type="text" id="cardNumber" name="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expiry">Data de Validade</label>
+                        <input type="text" id="expiry" name="expiry" placeholder="MM/AA" maxlength="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV</label>
+                        <input type="text" id="cvv" name="cvv" placeholder="000" maxlength="3" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-finalizar">Finalizar Compra</button>
+            </form>
+        </section>
+
+    </div>
+</div>
+
+<script src="../js/pagamento.js"></script>
+<script>
+    // Menu toggle functionality
+    document.getElementById('menuToggle').addEventListener('click', function() {
+        document.getElementById('sideMenu').classList.toggle('open');
+    });
+
+    // Adicionar itens de exemplo se o carrinho estiver vazio (para teste)
+    window.addEventListener('load', function() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) {
+            const exampleCart = [
+                {
+                    product: 'Smartphone Pro Max 5G',
+                    color: 'Preto',
+                    storage: '256GB',
+                    quantity: '1',
+                    price: 'R$ 2.499,00'
+                },
+                {
+                    product: 'Fone de Ouvido Bluetooth',
+                    color: 'Branco',
+                    storage: '',
+                    quantity: '1',
+                    price: 'R$ 299,90'
+                }
+            ];
+            localStorage.setItem('cart', JSON.stringify(exampleCart));
+            loadCart();
+        }
+    });
+</script>
+
+</body>
+</html>
